@@ -16,9 +16,16 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   module: {
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loader: 'eslint',
+      }
+    ],
     loaders: [
       {
-        test:    /\.jsx?$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
         loaders: ['react-hot', 'babel']
       }

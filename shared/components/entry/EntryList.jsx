@@ -1,4 +1,7 @@
 import React, { PropTypes } from 'react';
+import { List, ListItem } from 'material-ui';
+
+import EntryEditButton from './EntryEditButton';
 
 export default class EntryList extends React.Component {
   static propTypes = {
@@ -6,6 +9,10 @@ export default class EntryList extends React.Component {
     getEntries: PropTypes.func,
     editEntry: PropTypes.func,
     deleteEntry: PropTypes.func,
+  }
+
+  componentDidMount() {
+    this.props.getEntries();
   }
 
   handleDelete = (e) => {
@@ -24,24 +31,19 @@ export default class EntryList extends React.Component {
 
   render() {
     return (
-      <div id='entry-list'>
+      <List>
         {
           this.props.entries.map((entry, index) => {
             return (
-              <div key={index}>
-                <span>{entry}</span>
-
-                <button data-id={index} onClick={this.handleDelete}>
-                  X
-                </button>
-                <button data-id={index} onClick={this.handleEdit}>
-                  Edit
-                </button>
-              </div>
+              <ListItem
+                key={index}
+                primaryText={entry.text}
+                rightIcon={<EntryEditButton onClick={this.handleEdit}/>}
+              />
             );
           })
         }
-      </div>
+      </List>
     );
   }
 }

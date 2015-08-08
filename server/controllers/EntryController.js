@@ -11,7 +11,7 @@ export default function(app) {
 };
 
 function *getEntries() {
-  this.body = yield EntryService.getEntries(userId);
+  this.body = yield EntryService.getEntries();
 }
 
 function *createEntry() {

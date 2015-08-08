@@ -3,9 +3,10 @@ import mongo from '../config/mongo';
 const ObjectID = mongo.ObjectID;
 
 export function *getEntries() {
-  return yield mongo.entries.find(
+  const entries = yield mongo.entries.find(
     {'deletedTime': {'$exists': false}}
-  ).toArray().map(entry => ({...entry, id: entry._id}));
+  ).toArray()
+  return entries.map(entry => ({...entry, id: entry._id}));
 }
 
 export function *createEntry(entry) {

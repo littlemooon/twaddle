@@ -4,15 +4,19 @@
   "description": "Keep track of your new language",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=$NODE_PATH:./shared node --harmony .",
+    "start": "NODE_PATH=$NODE_PATH:./shared node --harmony ./server",
     "dev": "npm run start & webpack-dev-server --progress --color"
   },
   "author": "Fred Wright <fredwright0@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.5.4",
+    "co": "^4.6.0",
+    "co-body": "^3.1.0",
+    "co-mongo": "0.0.2",
     "immutable": "^3.7.4",
     "koa": "^0.21.0",
+    "koa-route": "^2.4.2",
     "react": "^0.13.3",
     "react-redux": "^0.2.2",
     "react-router": "^1.0.0-beta3",

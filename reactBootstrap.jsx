@@ -1,5 +1,4 @@
 import React from 'react';
-import koa from 'koa';
 import { Router } from 'react-router';
 import Location from 'react-router/lib/Location';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -10,31 +9,31 @@ import fetchComponentData from 'lib/fetchComponentData';
 import routes from 'shared/routes';
 import * as reducers from 'shared/reducers';
 
-const app = koa();
+export default function(app) {
+  app.use(function *() {
+    const location = new Location(this.path, this.query);
+    const reducer = combineReducers(reducers);
+    const storeCreator = applyMiddleware(promiseMiddleware)(createStore);
+    const store = storeCreator(reducer);
 
-app.use(function *() {
-  const location = new Location(this.path, this.query);
-  const reducer = combineReducers(reducers);
-  const storeCreator = applyMiddleware(promiseMiddleware)(createStore);
-  const store = storeCreator(reducer);
+    this.body = yield new Promise(resolve => {
+      Router.run(routes, location, (err, routeState) => {
+        if (err) return console.error(err);
 
-  this.body = yield new Promise(resolve => {
-    Router.run(routes, location, (err, routeState) => {
-      if (err) return console.error(err);
-
-      // Check this is rendering *something*, for safety
-      if(routeState) {
-        fetchComponentData(
-          store.dispatch,
-          routeState.components,
-          routeState.params)
-          .then(renderView(store, routeState))
-          .then(html => resolve(html))
-          .catch(err => resolve(err.message));
-      }
+        // Check this is rendering *something*, for safety
+        if(routeState) {
+          fetchComponentData(
+            store.dispatch,
+            routeState.components,
+            routeState.params)
+            .then(renderView(store, routeState))
+            .then(html => resolve(html))
+            .catch(err => resolve(err.message));
+        }
+      });
     });
   });
-});
+}
 
 const renderView = (store, routeState) => () => {
   const InitialView = (
@@ -69,5 +68,3 @@ const renderFullHtml = (html, initialState) => {
     </html>
   `;
 };
-
-export default app;

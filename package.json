@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_PATH=$NODE_PATH:./shared node .",
-    "dev": "npm run start & webpack-dev-server --progress --color"
+    "dev": "npm run start & webpack-dev-server --progress"
   },
   "author": "Fred Wright <fredwright0@gmail.com>",
   "license": "MIT",
@@ -23,7 +23,7 @@
     "babel": "^5.8.20",
     "babel-eslint": "^4.0.5",
     "babel-loader": "^5.3.2",
-    "eslint": "^1.0.0",
+    "eslint": "^1.1.0",
     "eslint-plugin-react": "^3.1.0",
     "react-hot-loader": "^1.2.8",
     "webpack": "^1.10.5",

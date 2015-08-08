@@ -1,5 +1,5 @@
-var path    = require('path');
-var webpack = require('webpack');
+const path    = require('path');
+const webpack = require('webpack');
 
 module.exports = {
   entry:  [
@@ -33,6 +33,15 @@ module.exports = {
     hot: true,
     proxy: {
       '*': 'http://localhost:' + (process.env.PORT || 3000)
+    },
+    stats: {
+      assets: false,
+      colors: true,
+      version: false,
+      hash: false,
+      timings: false,
+      chunks: false,
+      chunkModules: false,
     }
   }
 };

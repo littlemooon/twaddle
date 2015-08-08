@@ -4,10 +4,10 @@ import { history } from 'react-router/lib/BrowserHistory';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import promiseMiddleware from 'lib/promiseMiddleware';
-import immutifyState from 'lib/immutifyState';
-import * as reducers from 'reducers';
-import routes from 'routes';
+import promiseMiddleware from '../shared/lib/promiseMiddleware';
+import immutifyState from '../shared/lib/immutifyState';
+import * as reducers from '../shared/reducers';
+import routes from '../shared/routes';
 
 const initialState = immutifyState(window.__INITIAL_STATE__);
 const reducer = combineReducers(reducers);

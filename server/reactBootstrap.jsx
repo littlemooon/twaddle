@@ -10,16 +10,20 @@ import routes from '../shared/routes';
 import * as reducers from '../shared/reducers';
 
 export default function(app) {
-  app.use(function *() {
+  app.use(function *(next) {
     const location = new Location(this.path, this.query);
     const reducer = combineReducers(reducers);
     const storeCreator = applyMiddleware(promiseMiddleware)(createStore);
     const store = storeCreator(reducer);
 
+    if (this.path.substr(0, 5).toLowerCase() === '/api/') {
+      yield next;
+      return;
+    }
+
     this.body = yield new Promise(resolve => {
       Router.run(routes, location, (err, routeState) => {
         if (err) return console.error(err);
-
         if(routeState) {
           fetchComponentData(
             store.dispatch,

@@ -9,7 +9,7 @@ comongo.connect = function *() {
   const db = comongo.db = yield connect(config.mongo.url);
 
   // export default collections
-  comongo.users = yield db.collection('todos');
+  comongo.todos = yield db.collection('todos');
 };
 
 export default comongo;

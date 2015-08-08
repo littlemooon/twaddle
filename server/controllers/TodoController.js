@@ -1,7 +1,7 @@
 import route from 'koa-route';
 import parse from 'co-body';
 
-import TodoService from '../services/TodoService';
+import * as TodoService from '../services/TodoService';
 
 export default function(app) {
   app.use(route.get('/api/todo/', getTodos));

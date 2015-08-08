@@ -1,5 +1,6 @@
 import co from 'co';
 import koa from 'koa';
+import send from 'koa-send';
 
 import mongo from './server/config/mongo';
 import * as controllers from 'server/controllers';

@@ -2,27 +2,14 @@
   parser: 'babel-eslint',
   env: {
     browser: true,
-    node: true
+    node: true,
+    es6: true,
   },
   plugins: [
     'react'
   ],
   ecmaFeatures: {
-    arrowFunctions: true,
-    blockBindings: true,
-    classes: true,
-    defaultParams: true,
-    destructuring: true,
-    generators: true,
-    jsx: true,
     modules: true,
-    objectLiteralComputedProperties: true,
-    objectLiteralDuplicateProperties: true,
-    objectLiteralShorthandMethods: true,
-    objectLiteralShorthandProperties: true,
-    restParams: true,
-    spread: true,
-    templateStrings: true,
   },
   rules: {
     block-scoped-var: 2,

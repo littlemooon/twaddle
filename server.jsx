@@ -1,5 +1,5 @@
 import React from 'react';
-import express from 'express';
+import koa from 'koa';
 import { Router } from 'react-router';
 import Location from 'react-router/lib/Location';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
@@ -10,32 +10,29 @@ import fetchComponentData from 'lib/fetchComponentData';
 import routes from 'shared/routes';
 import * as reducers from 'shared/reducers';
 
-const app = express();
+const app = koa();
 
-app.use((req, res) => {
-  const location = new Location(req.path, req.query);
+app.use(function *() {
+  const location = new Location(this.path, this.query);
   const reducer = combineReducers(reducers);
   const storeCreator = applyMiddleware(promiseMiddleware)(createStore);
   const store = storeCreator(reducer);
 
-  if (req.path === '/favicon.ico') {
-    res.writeHead(200, {'Content-Type': 'image/x-icon'} );
-    return res.end();
-  }
+  this.body = yield new Promise(resolve => {
+    Router.run(routes, location, (err, routeState) => {
+      if (err) return console.error(err);
 
-  Router.run(routes, location, (err, routeState) => {
-    if (err) return console.error(err);
-
-    // Check this is rendering *something*, for safety
-    if(routeState) {
-      fetchComponentData(
-        store.dispatch,
-        routeState.components,
-        routeState.params)
-        .then(renderView(store, routeState))
-        .then(html => res.end(html))
-        .catch(err => res.end(err.message));
-    }
+      // Check this is rendering *something*, for safety
+      if(routeState) {
+        fetchComponentData(
+          store.dispatch,
+          routeState.components,
+          routeState.params)
+          .then(renderView(store, routeState))
+          .then(html => resolve(html))
+          .catch(err => resolve(err.message));
+      }
+    });
   });
 });
 

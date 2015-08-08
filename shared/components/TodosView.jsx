@@ -11,7 +11,6 @@ export default class TodosView extends React.Component {
   handleDelete = (e) => {
     const id = Number(e.target.dataset.id);
 
-    // Equivalent to `dispatch(deleteTodo())`
     this.props.deleteTodo(id);
   }
 

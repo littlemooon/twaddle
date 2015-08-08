@@ -3,7 +3,7 @@ import koa from 'koa';
 
 import mongo from './server/config/mongo';
 import * as controllers from 'server/controllers';
-import reactBootstrap from 'shared/server';
+import reactBootstrap from 'server/reactBootstrap';
 
 const PORT = process.env.PORT || 3000;
 

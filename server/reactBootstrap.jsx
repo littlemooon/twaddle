@@ -4,10 +4,10 @@ import Location from 'react-router/lib/Location';
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import promiseMiddleware from 'lib/promiseMiddleware';
-import fetchComponentData from 'lib/fetchComponentData';
-import routes from 'routes';
-import * as reducers from 'reducers';
+import promiseMiddleware from '../shared/lib/promiseMiddleware';
+import fetchComponentData from '../shared/lib/fetchComponentData';
+import routes from '../shared/routes';
+import * as reducers from '../shared/reducers';
 
 export default function(app) {
   app.use(function *() {

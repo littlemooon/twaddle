@@ -1,35 +1,35 @@
 import React, { PropTypes } from 'react';
 
-export default class TodosView extends React.Component {
+export default class EntryList extends React.Component {
   static propTypes = {
-    todos: PropTypes.object,
-    getTodos: PropTypes.func,
-    editTodo: PropTypes.func,
-    deleteTodo: PropTypes.func,
+    entries: PropTypes.object,
+    getEntries: PropTypes.func,
+    editEntry: PropTypes.func,
+    deleteEntry: PropTypes.func,
   }
 
   handleDelete = (e) => {
     const id = Number(e.target.dataset.id);
 
-    this.props.deleteTodo(id);
+    this.props.deleteEntry(id);
   }
 
   handleEdit = (e) => {
     const id  = Number(e.target.dataset.id);
-    const val = this.props.todos.get(id).text;
+    const val = this.props.entries.get(id).text;
 
     const newVal = window.prompt('', val);
-    this.props.editTodo(id, newVal);
+    this.props.editEntry(id, newVal);
   }
 
   render() {
     return (
-      <div id='todo-list'>
+      <div id='entry-list'>
         {
-          this.props.todos.map((todo, index) => {
+          this.props.entries.map((entry, index) => {
             return (
               <div key={index}>
-                <span>{todo}</span>
+                <span>{entry}</span>
 
                 <button data-id={index} onClick={this.handleDelete}>
                   X

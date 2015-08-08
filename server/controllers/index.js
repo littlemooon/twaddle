@@ -1,1 +1,1 @@
-export { default as todos } from './TodoController';
+export { default as entries } from './EntryController';

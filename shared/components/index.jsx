@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 
-export default class AppView extends React.Component {
+export default class App extends React.Component {
   static propTypes = {
     children: PropTypes.node,
   }

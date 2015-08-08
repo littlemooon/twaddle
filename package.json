@@ -17,9 +17,11 @@
     "immutable": "^3.7.4",
     "koa": "^0.21.0",
     "koa-route": "^2.4.2",
+    "material-ui": "^0.10.2",
     "react": "^0.13.3",
     "react-redux": "^0.2.2",
     "react-router": "^1.0.0-beta3",
+    "react-tap-event-plugin": "^0.1.7",
     "redux": "^1.0.0-rc"
   },
   "devDependencies": {

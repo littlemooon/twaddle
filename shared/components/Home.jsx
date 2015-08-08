@@ -9,11 +9,14 @@ import TodosForm from 'components/TodosForm';
 
 @connect(state => ({ todos: state.todos }))
 export default class Home extends React.Component {
-
   static propTypes = {
-    todos: PropTypes.array,
+    todos: PropTypes.object,
     dispatch: PropTypes.func,
   }
+
+  static needs = [
+    TodoActions.getTodos
+  ]
 
   render() {
     const { todos, dispatch } = this.props;

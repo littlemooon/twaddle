@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_PATH=$NODE_PATH:./shared node .",
-    "dev": "npm run start & webpack-dev-server --progress"
+    "dev": "npm run start & webpack-dev-server --progress --color"
   },
   "author": "Fred Wright <fredwright0@gmail.com>",
   "license": "MIT",

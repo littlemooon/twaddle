@@ -1,18 +1,24 @@
 import React, { PropTypes } from 'react';
 
 export default class AppView extends React.Component {
-
   static propTypes = {
     children: PropTypes.node,
   }
 
+  static contextTypes = {
+    router: PropTypes.object.isRequired
+  }
+
+  componentDidMount = () => {
+    this.context.router.transitionTo('home');
+  }
+
   render() {
-    const { children } = this.props;
     return (
       <div id='app-view'>
         <h1>Twaddle</h1>
         <hr />
-        {children}
+        {this.props.children}
       </div>
     );
   }

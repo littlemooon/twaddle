@@ -4,7 +4,7 @@
   "description": "Keep track of your new language",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_PATH=$NODE_PATH:./shared node --harmony ./server",
+    "start": "NODE_PATH=$NODE_PATH:./shared node --harmony .",
     "dev": "npm run start & webpack-dev-server --progress --color"
   },
   "author": "Fred Wright <fredwright0@gmail.com>",

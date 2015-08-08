@@ -1,11 +1,9 @@
-require('babel/register')({});
-const co = require('co');
-const koa = require('koa');
+import co from 'co';
+import koa from 'koa';
 
-const mongo = require('./server/config/mongo');
-const controllers = require('server/controllers');
-
-const reactBootstrap = require('./reactBootstrap');
+import mongo from './server/config/mongo';
+import * as controllers from 'server/controllers';
+import reactBootstrap from 'shared/server';
 
 const PORT = process.env.PORT || 3000;
 
@@ -16,11 +14,7 @@ co(function *() {
 
   reactBootstrap(app);
 
-  Object.keys(controllers).map(function(k) {
-    controllers[k](app);
-  });
+  Object.keys(controllers).map(k => controllers[k](app));
 
-  app.listen(PORT, function() {
-    console.log('Server listening on', PORT);
-  });
+  app.listen(PORT, () => console.log('Server listening on', PORT));
 });

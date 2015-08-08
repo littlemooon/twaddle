@@ -6,8 +6,8 @@ import { Provider } from 'react-redux';
 
 import promiseMiddleware from 'lib/promiseMiddleware';
 import fetchComponentData from 'lib/fetchComponentData';
-import routes from 'shared/routes';
-import * as reducers from 'shared/reducers';
+import routes from 'routes';
+import * as reducers from 'reducers';
 
 export default function(app) {
   app.use(function *() {
@@ -20,7 +20,6 @@ export default function(app) {
       Router.run(routes, location, (err, routeState) => {
         if (err) return console.error(err);
 
-        // Check this is rendering *something*, for safety
         if(routeState) {
           fetchComponentData(
             store.dispatch,

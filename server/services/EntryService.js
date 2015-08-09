@@ -22,7 +22,8 @@ export function *updateEntry(id, entry) {
     {_id: ObjectID(id)},
     updatedEntry
   );
-  return result && updatedEntry;
+  // return result[0] === 1 && updatedEntry;
+  return updatedEntry;
 }
 
 const addIds = (entries) =>

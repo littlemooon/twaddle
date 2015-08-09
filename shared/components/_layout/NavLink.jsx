@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import { NavItem } from 'react-bootstrap';
+import { transitionTo } from 'redux-react-router';
 import shouldPureComponentUpdate from 'react-pure-render/function';
 
 export default class NavLink extends React.Component {
@@ -12,13 +13,13 @@ export default class NavLink extends React.Component {
   shouldComponentUpdate = shouldPureComponentUpdate;
 
   onClick = (e) => {
-    dispatch(transitionTo(`/${this.props.to}`));
+    this.props.dispatch(transitionTo(`/${this.props.to}`));
   }
 
   render() {
     return (
       <NavItem
-        onClick={this.onClick}>
+        onClick={this.onClick.bind(this)}>
         {this.props.children}
       </NavItem>
     );

@@ -1,6 +1,7 @@
 import co from 'co';
 import koa from 'koa';
 import send from 'koa-send';
+import cors from 'koa-cors';
 
 import mongo from './server/config/mongo';
 import * as controllers from 'server/controllers';
@@ -14,6 +15,8 @@ co(function *() {
   yield mongo.connect();
 
   reactBootstrap(app);
+
+  app.use(cors());
 
   Object.keys(controllers).map(k => controllers[k](app));
 

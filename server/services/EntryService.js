@@ -5,26 +5,25 @@ const ObjectID = mongo.ObjectID;
 export function *getEntries() {
   const entries = yield mongo.entries.find(
     {'deletedTime': {'$exists': false}}
-  ).toArray()
-  return entries.map(entry => ({...entry, id: entry._id}));
+  ).toArray();
+  return addIds(entries);
 }
 
 export function *createEntry(entry) {
-  return yield mongo.entries.insert(
+  const entries = yield mongo.entries.insert(
     {...entry, createdTime: new Date()}
   );
+  return addIds(entries);
 }
 
 export function *updateEntry(id, entry) {
-  return yield mongo.entries.update(
+  const updatedEntry = {...entry, updatedTime: new Date()};
+  const result = yield mongo.entries.update(
     {_id: ObjectID(id)},
-    {...entry, updatedTime: new Date()}
+    updatedEntry
   );
+  return result && updatedEntry;
 }
 
-export function *deleteEntry(id) {
-  return yield mongo.entries.update(
-    {_id: ObjectID(id)},
-    {$set: {deletedTime: new Date()}}
-  );
-}
+const addIds = (entries) =>
+  entries.map(entry => ({...entry, id: entry._id}));

@@ -13,6 +13,8 @@ import immutifyState from 'lib/immutifyState';
 import * as reducers from 'reducers';
 import routes from 'routes';
 
+require('babel/polyfill');
+
 const initialState = immutifyState(window.__INITIAL_STATE__);
 const reducer = combineReducers({
   router: routerStateReducer,

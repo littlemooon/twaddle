@@ -1,18 +1,28 @@
 import { List } from 'immutable';
+import { handleActions } from 'redux-actions';
 
-const defaultState = new List();
+let id = 0;
 
-export default function(state = defaultState, action) {
-  switch(action.type) {
-    case 'GET_ENTRIES':
-      return state.concat(action.res.data);
-    case 'CREATE_ENTRY':
-      return state.concat(action.res.data.text);
-    case 'EDIT_ENTRY':
-      return state.set(action.id, action.text);
-    case 'DELETE_ENTRY':
-      return state.delete(action.id);
-    default:
-      return state;
-  }
-}
+export default handleActions({
+
+  GET_ENTRIES: (state, action) => {
+    return state;
+  },
+
+  CREATE_ENTRY: (state, action) => {
+    const entry = {...action.payload, id: id, createdDate: Date.now()};
+    id = id + 1;
+    return state.concat(entry);
+  },
+
+  EDIT_ENTRY: (state, action) => {
+    const { payload } = action;
+    const entry = {...payload, updatedDate: Date.now()};
+    return state.set(payload.id, entry);
+  },
+
+  DELETE_ENTRY: (state, action) => {
+    return state.delete(action.payload.id);
+  },
+
+}, new List());

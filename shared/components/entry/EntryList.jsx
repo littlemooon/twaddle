@@ -1,49 +1,41 @@
 import React, { PropTypes } from 'react';
-import { List, ListItem } from 'material-ui';
+import { ListGroup } from 'react-bootstrap';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 
-import EntryEditButton from './EntryEditButton';
+import EntryListItem from './EntryListItem';
 
 export default class EntryList extends React.Component {
   static propTypes = {
-    entries: PropTypes.object,
-    getEntries: PropTypes.func,
-    editEntry: PropTypes.func,
-    deleteEntry: PropTypes.func,
+    entries: PropTypes.object.isRequired,
+    getEntries: PropTypes.func.isRequired,
+    editEntry: PropTypes.func.isRequired,
+    deleteEntry: PropTypes.func.isRequired,
   }
 
   componentDidMount() {
     this.props.getEntries();
   }
 
-  handleDelete = (e) => {
-    const id = Number(e.target.dataset.id);
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
-    this.props.deleteEntry(id);
-  }
-
-  handleEdit = (e) => {
-    const id  = Number(e.target.dataset.id);
-    const val = this.props.entries.get(id).text;
-
-    const newVal = window.prompt('', val);
-    this.props.editEntry(id, newVal);
+  renderItem = (entry, index) => {
+    const { editEntry, deleteEntry } = this.props;
+    return (
+      <EntryListItem
+        key={index}
+        entry={entry}
+        editEntry={editEntry}
+        deleteEntry={deleteEntry}
+      />
+    );
   }
 
   render() {
+    const { entries } = this.props;
     return (
-      <List>
-        {
-          this.props.entries.map((entry, index) => {
-            return (
-              <ListItem
-                key={index}
-                primaryText={entry.text}
-                rightIcon={<EntryEditButton onClick={this.handleEdit}/>}
-              />
-            );
-          })
-        }
-      </List>
+      <ListGroup>
+        {entries.map(this.renderItem)}
+      </ListGroup>
     );
   }
 }

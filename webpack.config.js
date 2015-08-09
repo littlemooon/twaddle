@@ -12,6 +12,9 @@ module.exports = {
     filename: 'bundle.js'
   },
   resolve: {
+    alias: {
+      'less': path.join(__dirname, 'less'),
+    },
     modulesDirectories: ['node_modules', 'shared'],
     extensions: ['', '.js', '.jsx']
   },
@@ -27,13 +30,29 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
-        loaders: ['react-hot', 'babel']
-      }
+        loader: 'react-hot!babel'
+      },
+      {
+        test: /\.less$/,
+        loader: 'style!css!less'
+      },
+      {
+        test: /\.woff$|\.woff2$/,
+        loader: 'url?prefix=font/&limit=5000&mimetype=application/font-woff'
+      },
+      { test: /\.ttf$|\.eot$/, loader: 'file?prefix=font/' },
+      { test: /\.json$/, loader: 'json' },
+      { test: /\.svg$/, loader: 'raw!svgo' }
     ]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        BROWSER: JSON.stringify(true)
+      }
+    })
   ],
   devtool: 'inline-source-map',
   devServer: {

@@ -1,10 +1,14 @@
 import React from 'react';
-import { Router } from 'react-router';
+import { Router, Route } from 'react-router';
 import Location from 'react-router/lib/Location';
-import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createStore, combineReducers,
+  applyMiddleware, composeMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import { reduxRouteComponent, routerStateReducer } from 'redux-react-router';
+import { batchedUpdatesMiddleware } from 'redux-batched-updates';
+import thunk from 'redux-thunk';
+import promise from 'redux-promise';
 
-import promiseMiddleware from 'lib/promiseMiddleware';
 import fetchComponentData from 'lib/fetchComponentData';
 import routes from 'routes';
 import * as reducers from 'reducers';
@@ -12,8 +16,15 @@ import * as reducers from 'reducers';
 export default function(app) {
   app.use(function *(next) {
     const location = new Location(this.path, this.query);
-    const reducer = combineReducers(reducers);
-    const storeCreator = applyMiddleware(promiseMiddleware)(createStore);
+
+    const reducer = combineReducers({
+      router: routerStateReducer,
+      ...reducers
+    });
+
+    const m = composeMiddleware(thunk, promise, batchedUpdatesMiddleware);
+
+    const storeCreator = applyMiddleware(m)(createStore);
     const store = storeCreator(reducer);
 
     if (this.path.substr(0, 5).toLowerCase() === '/api/') {
@@ -42,7 +53,9 @@ const renderView = (store, routeState) => () => {
   const InitialView = (
     <Provider store={store}>
       {() =>
-        <Router {...routeState} />
+        <Router>
+          <Route {...routeState} component={reduxRouteComponent(store)}/>
+        </Router>
       }
     </Provider>
   );

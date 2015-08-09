@@ -1,31 +1,21 @@
 import React, { PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import mui from 'material-ui';
+import shouldPureComponentUpdate from 'react-pure-render/function';
 
 import * as EntryActions from 'actions/EntryActions';
 
 import EntryList from 'components/entry/EntryList';
 import EntryCreate from 'components/entry/EntryCreate';
 
-const ThemeManager = new mui.Styles.ThemeManager();
-
 @connect(state => ({ entries: state.entries }))
 export default class Home extends React.Component {
   static propTypes = {
-    entries: PropTypes.object,
-    dispatch: PropTypes.func,
+    entries: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
   }
 
-  static childContextTypes = {
-    muiTheme: PropTypes.object
-  }
-
-  getChildContext() {
-    return {
-      muiTheme: ThemeManager.getCurrentTheme()
-    };
-  }
+  shouldComponentUpdate = shouldPureComponentUpdate;
 
   render() {
     const { entries, dispatch } = this.props;

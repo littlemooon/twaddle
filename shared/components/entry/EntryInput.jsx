@@ -4,7 +4,7 @@ import shouldPureComponentUpdate from 'react-pure-render/function';
 
 export default class EntryInput extends React.Component {
   static propTypes = {
-    initialValue: PropTypes.object.isRequired,
+    initialValue: PropTypes.string.isRequired,
     propName: PropTypes.string.isRequired,
     onBlur: PropTypes.func.isRequired,
   }

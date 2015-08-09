@@ -53,8 +53,8 @@ const renderView = (store, routeState) => () => {
   const InitialView = (
     <Provider store={store}>
       {() =>
-        <Router>
-          <Route {...routeState} component={reduxRouteComponent(store)}/>
+        <Router {...routeState}>
+          <Route component={reduxRouteComponent(store)}/>
         </Router>
       }
     </Provider>

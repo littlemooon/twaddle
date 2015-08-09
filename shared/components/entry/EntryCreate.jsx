@@ -54,7 +54,7 @@ export default class EntryCreate extends React.Component {
         <Col sm={2}>
           <Button
             onClick={this.handleSubmit}
-            glyph='done'
+            glyph='plus'
           />
         </Col>
       </Row>
